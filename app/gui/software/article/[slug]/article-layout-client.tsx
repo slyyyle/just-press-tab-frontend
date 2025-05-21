@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -20,14 +20,12 @@ interface ArticleContentProps {
 
 export function ArticleContent({ slug, frontmatter, code }: ArticleContentProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  
-  const parent = searchParams.get('parent') || frontmatter.category || 'software';
   const articleSlug = slug;
 
   const displayTitle = frontmatter.title || articleSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const articleAuthor = frontmatter.author || "Kyle Hammitt";
   const articleDate = frontmatter.date ? new Date(frontmatter.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : "N/A";
+  const articleCategory = frontmatter.category || 'software';
 
   const isChatbotArticle = articleSlug === "wait-what-that-s-not-how-you-spell-chatbot";
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
@@ -105,12 +103,11 @@ export function ArticleContent({ slug, frontmatter, code }: ArticleContentProps)
             Date: {articleDate}
           </h2>
           <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
-            Category: {parent}
+            Category: {articleCategory}
           </h2>
         </div>
         
         <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] font-vt323 text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-p:text-[hsl(var(--platform))] prose-strong:text-[hsl(var(--primary))] prose-a:text-[hsl(var(--accent))] hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ol:text-[hsl(var(--platform))] prose-li:text-[hsl(var(--platform))]">
-          { /* The isChatbotArticle condition might be better handled by conditionally passing components or through MDX itself */}
           <MDXContent components={{ Image, YouTubeEmbed, CollapsibleHeader }} />
         </div>
       </div>
