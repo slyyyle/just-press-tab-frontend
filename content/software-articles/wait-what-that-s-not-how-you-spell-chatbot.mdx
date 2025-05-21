@@ -9,15 +9,11 @@ slug: "wait-what-that-s-not-how-you-spell-chatbot"
 import Image from 'next/image';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
-{/* The CollapsibleHeader component will need to be globally available or imported. */}
-{/* The expandedSections logic for this specific article will still be managed in the main page component for now. */}
+{/* The CollapsibleHeader component will be made available by the page rendering this MDX. */}
+{/* The expandedSections logic for this specific article is managed by the client component rendering this MDX. */}
 
 <CollapsibleHeader id="intro" title="We'll Get There, I Promise" />
-
-{/* This is a placeholder for how conditional rendering might work if state is managed outside */}
-{/* We will refine this section once the main page.tsx is updated to load MDX */}
-
-<> {/** Using a fragment for conditional content **/
+<>
   <p>
     At the heart of many successful AI and machine learning techniques is the idea of finding simple, elegant rules that separate complex data into meaningful groups. This is not so different from how we, as humans, solve problems: we look for patterns, draw boundaries, and try to make sense of the world by reducing uncertainty.
   </p>
@@ -28,148 +24,162 @@ import YouTubeEmbed from '@/components/YouTubeEmbed';
       alt="Pattern Recognition Visualization" 
       width={500} 
       height={300}
-      priority={true}
-      sizes="(max-width: 768px) 100vw, 500px"
-      style={{ 
-        width: '100%', 
-        maxWidth: '500px', 
-        height: 'auto',
-        objectFit: 'contain'
-      }}
+      sizes="100vw"
+      style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
       className="rounded-md shadow-md"
     />
   </div>
 
   <p className="mb-4 text-[hsl(var(--platform))]">
-    This visualization shows pattern recognition forming in neural networks. Our brains embed meaning in states we can't scientifically decode, which is both powerful and dangerous. Unlike computers with explicit instructions, our brains work more like state machines, moving electricity and information through fluid patterns. When tying shoes, we don't consciously think "lower right hand, grab lace, under the bridge." We start with procedural steps as children, but these evolve into seamless motions rich with embedded data. This gap between how we process information and how we understand that processing makes replicating intelligence so challenging and often misleading.
+    This visualization represents how pattern recognition forms in neural networks. The power—and danger—of our brains lies in how we embed meaning in states we cannot scientifically decode. Unlike computers with explicit instructions, our brains function more like state machines, transducing electricity and information through fluid patterns. We don't consciously think "lower right hand, grab lace, under the bridge" when tying shoes. We start with procedural steps as children, but they evolve into seamless motions—themselves a form of communication rich with data. This gulf between how we process information and how we understand that processing is what makes replicating intelligence so challenging and potentially misleading. 
   </p>
 </>
 
 <CollapsibleHeader id="utility" title="Utility First, We Just Don't See Ourselves That Way" />
 <>
   <p className="mb-4 text-[hsl(var(--platform))]">
-    Our brains prioritize effectiveness over explainability. We imagine past memories as being stored somewhere like a hard drive, but it's more likely our brains recognize patterns so efficiently that they selectively create similar-but-different memories to be recalled when needed. We're incredibly efficient with energy use, which makes this reality exciting rather than reductionist. What freedom to know our perceptions can be guided by us when we take control. Of course, many companies are eager to take that control from you.
+    Our brains optimize for effectiveness, not explainability. We even think of past recollections of events as memories stored somewhere, much like a hard drive. It seems more likely our brains recognize patterns at such a level, that they are selectively embedding a similar yet different memory than reality to be reproduced when needed by the human. We are such vast creatures, and so efficient in energy use - that it makes my previous statement not reductionist, but exciting. How freeing a concept to know our perceptions can be strongly guided by us, if we take control of them. Many companies are hungry to do that for you.
   </p>
 </>
 
 <CollapsibleHeader id="language" title="How Language Was Formed (Functionally)" />
 <>
-  <p className="mb-4">
-    Language wasn't designed like computers with careful planning and predefined goals. It emerged organically from our need to communicate and work together. It evolved through use rather than design, shaped by the problems it helped us solve. This makes language a powerful lens for understanding human thought, not because it was designed that way, but because it couldn't help becoming one.
+  <p>
+    Language, at its core, is a tool for separating and labeling the world. Early humans needed to communicate about food, danger, and opportunity. Over time, language evolved to be a highly efficient system for encoding and transmitting information—using patterns, context, and shared understanding to reduce uncertainty and increase clarity. In a sense, language is the original "pattern recognition" system.
   </p>
-
-  <p className="mb-4">
-    Think about how we solve new problems: We create analogies to familiar concepts. We refine these through trial and error, building context. Finally, we compress everything into a simpler, usable model. We transform messy explorations into usable shortcuts, simplifying so we can act efficiently. Language works similarly. We use metaphors to grasp new ideas, build nuance through conversation, and compress this shared understanding into words that function as cognitive shortcuts.
-  </p>
-
-  <div className="my-6 flex justify-center">
-    <YouTubeEmbed 
-      videoId="4X6UHFa--Qc"
-      title="YouTube video player"
-      className="rounded-md shadow-md"
-    />
+  <div className="my-6 relative w-full" style={{ paddingBottom: '56.25%' }}>
+    <YouTubeEmbed videoId="WfXT7fqlCJ8" title="YouTube video player" className="absolute top-0 left-0 w-full h-full" />
   </div>
 </>
 
-<CollapsibleHeader id="decisions" title="We Make Decisions Faster Than We Know How" />
+<CollapsibleHeader id="decisions" title="Words, Numbers, Metrics, Decisions, and Actions" />
+<>
+  <p>
+    Why does this matter? Before we had math, statistics, or even formal logic, people solved problems by gathering what they knew, sharing stories, and refining their perspective through trial and error. Decision making has always been about using the information at hand, doing your best, and then learning and adapting for the next time. In modern times, we've created metrics and formulas to help us, but sometimes we hide behind these numbers or misuse them, forgetting that the core of problem solving is still about perspective, learning, and iteration. Metrics are just tools—what matters is how we use them to improve our understanding and actions. It is easy to chase familiar metrics to our doom - and along the way it will feel like this:
+  </p>
+  <div className="my-6 relative w-full" style={{ paddingBottom: '56.25%' }}>
+    <YouTubeEmbed videoId="_Yse7lNw2Lw" title="YouTube video player" className="absolute top-0 left-0 w-full h-full" />
+  </div>
+</>
+
+<CollapsibleHeader id="examples" title="Examples Are The Best Perspective" />
 <>
   <p className="mb-4">
-    Research suggests we become consciously aware of our decisions only after making them. This doesn't mean we aren't making the decisions ourselves—rather, the "we" making decisions includes both conscious and unconscious processes. Our brains constantly predict the future and evaluate options beneath our awareness. By the time we consciously decide, our brains have already evaluated choices and narrowed them down.
+    Imagine a small village market long ago. The leader wants to decide whether to keep the market open later in the evening. Back then, people would talk to each other—"It seems like more people come by after sunset," or "I noticed we sold out of bread last night." These are words, stories, and observations.
   </p>
-
+  <p className="mb-4">
+    As time went on, someone might start counting: "We sold 20 loaves after sunset yesterday, but only 10 the day before." Now, numbers and simple metrics are helping the decision. Maybe they start keeping a tally every night, and soon they have a table of sales by hour.
+  </p>
+  <p className="mb-4">
+    But what if someone picks the wrong metric? Suppose they only count bread, but not fruit, and fruit sales actually drop in the evening. Or maybe they gather data only on festival days, when sales are always high, and assume every night will be the same. Or perhaps they assume that more sales always means more profit, but don't notice that evening sales require paying extra for lighting and security, which eats up the profit.
+  </p>
+  <p className="mb-4">
+    This is where things can go wrong: the metric chosen doesn't match the real goal, or the data is gathered in a way that misses important context. It's easy to be misled by numbers if you don't ask the right questions or check your assumptions.
+  </p>
+  <p className="mb-4">
+    For example, if you only count bread sales and ignore fruit, you might decide to stay open later thinking business is booming, but actually lose money as fruit sales drop. Let's break this down further: if bread sales increase by 30% in the evening but fruit sales drop by 60%, and fruit has a higher profit margin (50% vs 20% for bread), you could be making a decision that actively harms your business. The bread data alone tells a story of growth, while the complete picture reveals decline. What's worse, because you're only tracking what confirms your initial hypothesis, you might double down on the wrong strategy by further extending hours or adding more bread varieties, all while your overall profitability continues to fall.
+  </p>
   <div className="my-6 flex justify-center">
     <Image 
-      src="/decision-tree.gif" 
-      alt="Decision tree visualization" 
+      src="/whypastor.webp" 
+      alt="Why Pastor Illustration" 
       width={500} 
       height={300}
-      priority={true}
-      sizes="(max-width: 768px) 100vw, 500px"
-      style={{ 
-        width: '100%', 
-        maxWidth: '500px', 
-        height: 'auto',
-        objectFit: 'contain'
-      }}
+      sizes="100vw"
+      style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
       className="rounded-md shadow-md"
     />
   </div>
-
   <p className="mb-4">
-    This explains why intuition can be so powerful. It's not magic but your brain recognizing patterns and making predictions based on experience. That feeling of knowing something without being able to explain it happens when your brain recognizes patterns your conscious mind hasn't articulated yet. It's why experts make better decisions faster than novices without consciously considering all options—their brains know which patterns matter and which don't.
+    This is where modern AI systems can actually help prevent these mistakes. A chatbot with proper chain-of-thought reasoning can process vast amounts of information overnight, exploring hundreds of potential scenarios, edge cases, and hidden variables that humans might miss. It can systematically identify blind spots in your data collection, suggest alternative metrics that better align with your goals, and even simulate the potential outcomes of different decisions. Unlike humans who tend to anchor on familiar patterns, an AI doesn't have emotional attachment to particular metrics or preconceived notions about what "should" work. By examining the collected wisdom embedded in human language—which contains warnings about these exact pitfalls across countless domains—the AI can help you avoid the common traps that businesses have fallen into throughout history. The key is using these tools to enhance your decision-making process, not replace your judgment entirely.
   </p>
 </>
 
-<CollapsibleHeader id="examples" title="Practical Examples Make Everything Clear" />
-<>
-  <p className="mb-4">
-    Let's consider deciding which day to visit a local market. You've heard weekdays are less crowded, but you're not sure which one is best. You might assume Mondays and Fridays are better since people often take long weekends, and Wednesdays might be busier because stores often run promotions when the previous week's deals end and new sales begin. This mental shortcut based on general patterns works, though it's not a thorough analysis.
-  </p>
-
-  <p className="mb-4">
-    But what if you want to truly optimize your visit? You gather data: checking online reviews about crowds, asking the market's social media manager about busy times, maybe even driving by on different days to gauge the crowd. This more precise information helps, but costs you time, effort, and the mental load of processing it all.
-  </p>
-  
-  <p className="mb-4">
-    We often believe more data will make answers clear. The reality is that data frequently complicates decisions by introducing competing factors. Maybe Mondays have the shortest lines but the least fresh produce. Maybe Thursdays have better stock but slightly longer waits. Which is better? There's no objective answer—it depends entirely on what you value in your market experience.
-  </p>
-  
-  <p className="mb-4">
-    AI systems struggle with this kind of nuanced decision-making. They excel at finding patterns and optimizing specific metrics but can't match the holistic, multi-criteria judgments that come naturally to humans. They might tell you when the market is least crowded but can't decide if that's worth trading for potentially less selection or freshness. What they do offer is objectivity without bias. They might determine the optimal time is 10:37 AM on Tuesday, far more precise than you'd guess. But this precision only matters if you can act on it and accept the tradeoffs involved, like perhaps missing work or other commitments.
-  </p>
-</>
-  
 <CollapsibleHeader id="roadMeeting" title="Where Rubber Meets the Road" />
 <>
   <p className="mb-4">
-    Let's remember that making a decision and taking action are distinct. You might decide, based on data, to extend the market's hours, but nothing changes until you actually implement new hours. Or you might act without fully considering consequences, leading to unexpected outcomes. The gap between decision and action is where leadership, communication, and follow-through matter most. Good leaders make informed decisions, ensure effective implementation, and adjust when things don't go as expected.
+    It's also important to realize that making a decision and taking action are not the same thing. You might decide, based on your data, to keep the market open later, but if you don't actually change the hours, nothing happens. Or, you might act on a decision without fully considering the consequences, leading to unexpected results. The space between decision and action is where leadership, communication, and follow-through matter most. Good leaders not only make informed decisions, but also ensure those decisions are carried out effectively—and are willing to adjust if things don't go as planned.
   </p>
   <p className="mb-4">
-    It's puzzling how often we fall into serving systems rather than making systems serve us. We created metrics and frameworks to solve real problems, not to follow blindly or mine for insights without purpose. When we submit to metrics just because they reduce stress, provide security, or give a sense of control, we lose sight of our real goals. This goes beyond philosophy—organizations waste hundreds of thousands of dollars when intent and design aren't aligned. Metrics work only when backed by clear intention. Without that clarity, we end up serving our tools instead of being served by them.
+    It's hard to understand why we so often fall into this trap. The systems and metrics we developed were originally created to help us solve real problems, not to be followed blindly or used to dig for insights without purpose. When we submit to a metric just because it makes us feel less stressed, more protected, or gives us a sense of control, we risk losing sight of the real goal. This isn't just a philosophical issue—it can cost organizations hundreds of thousands of dollars when intent and design are not tightly aligned. Metrics and systems are only as good as the intent and clarity behind them. When we forget that, we end up serving the system instead of letting it serve us.
+  </p>
+  <p className="mb-4">
+    In the end, the best leaders are the ones who can take all the information—stories, numbers, patterns, and their own experience—and make a decision. Then, most importantly, they act on it, learn from the outcome, and adjust as needed. The process is simple at its core: gather, decide, act, learn, repeat. We often make it harder than it needs to be by overcomplicating things or hiding behind numbers, but the essence of good decision making hasn't changed.
   </p>
 </>
-  
-<CollapsibleHeader id="gini" title="Don't Be Afraid, Modern AI Is Different" />
+
+<CollapsibleHeader id="gini" title="Gini Impurity, Separability, and Problem Solving" />
 <>
   <p className="mb-4">
-    If you've seen presentations about decision trees in machine learning, you know there are countless ways to divide outcomes and evaluate importance, leading to vastly different results. Sounds scary? Humans face the same challenge. We can't consider every option when deciding. We simplify, generalize, and use shortcuts not because we're flawed, but because it's the only way to function amid infinite complexity.
+    In other more mathematical prediction models that use data in columns and tables, we have an idea called Gini Impurity.   Gini Impurity is a measure from decision tree learning that helps us understand how mixed a set of data values is. The lower the impurity, the more "separable" the data. In both human reasoning and machine learning, the goal is often to find splits or boundaries that make things as clear as possible—reducing ambiguity and making decisions easier. This is the same principle that underlies much of our problem-solving: we try to break down big, messy problems into smaller, more manageable pieces.  Once we solve problems, we generalize what we learned, to avoid or solve future problems and understand why they occur and how to benefit from them as an opportunity.
+  </p>
+  <div className="my-6 flex justify-center">
+    <Image 
+      src="/decision-tree.webp" 
+      alt="Decision Tree Visualization" 
+      width={500} 
+      height={300}
+      sizes="100vw"
+      style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
+      className="rounded-md shadow-md"
+    />
+  </div>
+  <p className="mb-4">
+    We can teach models to create trees at good "branch points", and these lead to something called a decision tree - they help us sort our data and make sense of it. In the above example, the model decided due to the gini impurity being the BEST when the decision amount is petal length being greater than 2.45 cm, not inclusive, or less than 2.45 cm, inclusive. This is simple, and easy to understand, it's just allowing something to set rules for itself based on what it sees, using math as its guide to "get to the solution". This led to random forests of decision trees, where we generate thousands of these, and use them in concert to remove points of weakness in the tree. Then, this led very nicely into deep learning training methods - it's the same idea.
+  </p>
+  <div className="my-6 flex justify-center">
+    <Image 
+      src="/ML-gradient.webp" 
+      alt="Machine Learning Gradient Visualization" 
+      width={500} 
+      height={300}
+      sizes="100vw"
+      style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
+      className="rounded-md shadow-md"
+    />
+  </div>
+  <p className="mb-4">
+    However, with larger models, all those tiny decisions start to look like the above, which is a "gradient" or decision map of a model (as best we can understand it given our human limitations) given the last data point it saw. It will use that to make tiny adjustments to billions of its neurons at once. In essence - it mimics learning. The end model is not learned. It just spits out really complex contexts we trained it to, to make it do things.
+  </p>
+</>
+
+<CollapsibleHeader id="highLevelPatterns" title="Machine Learning, AI, and High-Level Patterns" />
+<>
+  <p>
+    Modern AI and machine learning systems operate at scales and speeds that are impossible for humans, but the underlying principles are surprisingly familiar. Techniques like <strong>Attention</strong> in neural networks allow models to focus on the most relevant parts of the data, much like how we pay attention to important details in a conversation or a problem. These systems use high-level patterns—learned from vast amounts of data—to make predictions, generate language, and solve problems in ways that echo our own cognitive processes.
+  </p>
+</>
+
+<CollapsibleHeader id="chatbots" title="Dude, You Promised Us Chatbots" />
+<>
+  <p className="mb-4">
+    The real power of modern AI isn't just in the data, but in how you can keep that data private and secure. With the right tools, you can use AI locally—on your own devices—so your information never leaves your control. You can benefit from large-scale analysis, anonymize and obfuscate your behaviors, and remain unpredictable, even while using services like Google. This is crucial: you should never have to give your personal data to anyone just to get the benefits of AI.
   </p>
   <p className="mb-4">
-    Decision trees often use "Gini impurity" to measure effectiveness. This statistic estimates how often a randomly chosen element would be incorrectly labeled based on the distribution in a subset. In plain terms, it measures how mixed up a group is. This elegant equation applies to everything from guessing how long my roommate's shower will take to solving Minesweeper. What might have required thousands of years to express linguistically becomes a formula that applies universally and reveals which factors matter most—assuming we measured the right things to begin with.
+    Now, imagine wearing glasses that recognize every product in your field of view. Instantly, a picture is sent and analyzed—names, prices, and details are returned to you. But it doesn't stop there: your personal AI assistant knows where you live, can see your maps, remembers places you like, and can make a decision in two seconds about whether you should buy Cookie Crunch here, on Amazon, at a new storefront it just found, or even wait for a predicted sale next weekend based on your credit card data from previous years. Have it laying around somewhere?
   </p>
-
+  <p className="mb-4">
+    So there's my challenge. Making that happen. It takes...a bit of buy in from others for truly private and personalized tools. It's sort of a "life organizer" question in a way - what do you want? Help me help you! That Jerry Maguire sort of thing.
+  </p>
   <div className="my-6 flex justify-center">
-    <YouTubeEmbed 
-      videoId="Yeu9aMK6avU"
-      title="YouTube video player" 
+    <Image 
+      src="/tom-cruise-help.gif" 
+      alt="Tom Cruise Help Me Help You" 
+      width={500} 
+      height={300}
+      sizes="100vw"
+      style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
       className="rounded-md shadow-md"
     />
   </div>
 </>
-  
-<CollapsibleHeader id="highLevelPatterns" title="We're All Just High Level Pattern Recognition Machines" />
+
+<CollapsibleHeader id="conclusion" title="Conclusion" />
 <>
   <p className="mb-4">
-    Our brains evolved to spot patterns quickly—sometimes too quickly. We see faces in clouds, shapes in random patterns, and conspiracies in coincidences. Yet this same pattern recognition helps us navigate complex social situations, learn languages, and solve problems. The art is knowing when to trust your intuition and when to question it.
+    Whether it's a decision tree splitting data, a human learning a new word, or a transformer model attending to the right context, the core idea is the same: find the patterns, reduce the uncertainty, and make sense of the world. That's why these methods work—and why, in the end, even the most advanced AI is still following principles that are deeply human.
   </p>
-</>
-  
-<CollapsibleHeader id="chatbots" title="This Isn't Even A Chatbot Article, It's About... Something Else" />
-<>
-  <p className="mb-4">
-    The true power of modern AI lies not just in data but in keeping that data private and secure. With the right tools, you can use AI locally on your own devices, keeping your information under your control. You can benefit from sophisticated analysis, anonymize your behaviors, and remain unpredictable even while using services like Google. This matters deeply: you should never need to surrender your personal data to access AI benefits.
-  </p>
-  <p className="mb-4">
-    Imagine glasses that recognize every product you see. A photo is instantly analyzed, returning names, prices, and details. But it goes further: your personal AI assistant knows where you live, accesses your maps, remembers your preferences, and decides in seconds whether you should buy Cookie Crunch here, on Amazon, from a newly-discovered store, or wait for next weekend's predicted sale based on your credit card history. Sound useful?
-  </p>
-  <p className="mb-4">
-    That's my challenge. Making this reality requires buy-in from others for truly private, personalized tools. It's fundamentally about life organization—what do you actually want? Help me help you, as Jerry Maguire would say.
-  </p>
-</>
-  
-<CollapsibleHeader id="conclusion" title="Conclusion: A Path Forward" />
-<>
   <p>
-    As these articles develop, they'll grow in technical complexity and depth. I know it can be hard to grasp AI's full potential, even for those deeply immersed in the field. The landscape changes daily with new capabilities. I've found that using AI concepts to explain our world can be as valuable as the applications themselves. Understanding—seeing patterns we previously missed—shifts our perspective in ways that naturally lead to better decisions. The journey of learning these tools transforms us, regardless of how we apply them. Perhaps the greatest power isn't in the algorithms but in the new perspectives they help us discover.
+    As we move forward, these articles will gradually increase in technical complexity and depth. I recognize it can be challenging to consistently grasp all that AI can do—even for someone deeply immersed in the field. The landscape evolves rapidly, with new capabilities emerging daily. Yet I've found that using AI algorithms to explain the world around us can be just as powerful as what we ultimately do with that information. The act of understanding—of seeing patterns we previously missed—often changes our perspective in ways that naturally lead to better decisions. In that sense, the journey of learning about these tools is itself transformative, regardless of how you eventually apply them. The greatest power may not be in the algorithms themselves, but perspectives those algorithms can help us recognize.
   </p>
 </> 
