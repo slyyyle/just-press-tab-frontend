@@ -93,7 +93,7 @@ export function GuiDashboard() {
                 </div>
               </div>
               <div className="font-mono text-sm text-slate-400">
-                <span className="text-cyan-400">user</span>@<span className="text-red-400">justpresstab.com</span>
+                <span className="text-cyan-400">kyle.hammitt</span>@<span className="text-red-400">justpresstab.com</span>
               </div>
             </motion.div>
 
