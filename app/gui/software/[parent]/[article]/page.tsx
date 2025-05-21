@@ -2,28 +2,31 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { slugify } from '@/lib/slugify'; // Make sure this import works
+import { slugify } from '@/lib/slugify';
 
 export default function ArticlePage({ params }: { params: Promise<{ parent: string; article: string }> }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { parent, article } = React.use(params);
   
-  // Function to convert slug back to readable title with proper capitalization
-  const slugToTitle = (slug: string) => {
-    // Replace hyphens with spaces and capitalize first letter of each word
-    return slug.split('-').map(word => 
-      word.charAt(0).toUpperCase() + word.slice(1)
-    ).join(' ');
-  };
-  
-  // Get article title from slug or fallback to query param if provided
-  const articleTitle = searchParams.get('title') 
-    ? decodeURIComponent(searchParams.get('title')!) 
-    : slugToTitle(article);
+  // Get the original title with proper capitalization and punctuation from query params
+  // or provide a default by transforming the slug
+  const originalTitle = searchParams.get('title') 
+    ? decodeURIComponent(searchParams.get('title')!)
+    : article.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
-  // Check if this is our chatbot article by comparing slug
-  const isChatbotArticle = slugify("Wait what? That's not how you spell chatbot!") === article;
+  // Define known articles with their proper titles
+  const knownArticles: Record<string, string> = {
+    "wait-what-that-s-not-how-you-spell-chatbot": "Wait what? That's not how you spell chatbot!",
+    "rag-and-cot-the-dynamic-duo": "RAG & CoT: The Dynamic Duo",
+    "modeling-chains-of-thought-after-how-i-solve-problems": "Modeling Chains of Thought After How I Solve Problems"
+  };
+
+  // Use known article title if available, otherwise use the query param or transformed slug
+  const displayTitle = knownArticles[article] || originalTitle;
+  
+  // Check if this is our chatbot article by comparing slug directly
+  const isChatbotArticle = article === "wait-what-that-s-not-how-you-spell-chatbot";
 
   // State to track which sections are expanded
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
@@ -105,7 +108,7 @@ export default function ArticlePage({ params }: { params: Promise<{ parent: stri
           ← Back
         </button>
         <h1 className="font-press-start-2p text-3xl mb-3 text-[hsl(var(--primary))]">
-          {articleTitle}
+          {displayTitle}
         </h1>
         <div className="flex flex-row justify-between mb-6">
           <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
