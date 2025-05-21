@@ -15,21 +15,19 @@ function ArticleContent() {
   // Get the clean title from URL (used for identification)
   const urlTitle = searchParams.get('title') || '';
   
-  // Get the display title with proper formatting
-  const displayTitle = searchParams.get('displayTitle') 
-    ? decodeURIComponent(searchParams.get('displayTitle')!)
-    : '';
-  
-  // Generate slug from title for internal use if needed
-  const slugifiedTitle = urlTitle ? slugify(urlTitle) : '';
-  
-  // Define known articles with their proper titles for fallback
+  // Define known articles with their proper titles
   const knownArticles: Record<string, string> = {
     "wait-what-that-s-not-how-you-spell-chatbot": "Wait what? That's not how you spell chatbot!",
     "rag-and-cot-the-dynamic-duo": "RAG & CoT: The Dynamic Duo",
     "modeling-chains-of-thought-after-how-i-solve-problems": "Modeling Chains of Thought After How I Solve Problems"
   };
 
+  // Get the display title from the mapping or fallback to URL title
+  const displayTitle = knownArticles[urlTitle] || urlTitle.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  
+  // Generate slug from title for internal use if needed
+  const slugifiedTitle = urlTitle ? slugify(urlTitle) : '';
+  
   // Determine if this is the chatbot article
   const isChatbotArticle = urlTitle === "wait-what-that-s-not-how-you-spell-chatbot";
 
