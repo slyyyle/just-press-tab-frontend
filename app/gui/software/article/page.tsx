@@ -11,23 +11,27 @@ function ArticleContent() {
   
   // Get query parameters
   const parent = searchParams.get('parent') || '';
-  const title = searchParams.get('title') ? decodeURIComponent(searchParams.get('title')!) : '';
+  
+  // Get the clean title from URL (used for identification)
+  const urlTitle = searchParams.get('title') || '';
+  
+  // Get the display title with proper formatting
+  const displayTitle = searchParams.get('displayTitle') 
+    ? decodeURIComponent(searchParams.get('displayTitle')!)
+    : '';
   
   // Generate slug from title for internal use if needed
-  const slugifiedTitle = title ? slugify(title) : '';
+  const slugifiedTitle = urlTitle ? slugify(urlTitle) : '';
   
-  // Define known articles with their proper titles
+  // Define known articles with their proper titles for fallback
   const knownArticles: Record<string, string> = {
     "wait-what-that-s-not-how-you-spell-chatbot": "Wait what? That's not how you spell chatbot!",
     "rag-and-cot-the-dynamic-duo": "RAG & CoT: The Dynamic Duo",
     "modeling-chains-of-thought-after-how-i-solve-problems": "Modeling Chains of Thought After How I Solve Problems"
   };
 
-  // Display the title directly from the parameter
-  const displayTitle = title;
-  
-  // Check if this is our chatbot article by comparing titles
-  const isChatbotArticle = title === "Wait what? That's not how you spell chatbot!";
+  // Determine if this is the chatbot article
+  const isChatbotArticle = urlTitle === "wait-what-that-s-not-how-you-spell-chatbot";
 
   // State to track which sections are expanded
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
