@@ -100,7 +100,7 @@ export default function SoftwarePage() {
             ].map((articleTitle) => (
               <Link
                 key={articleTitle}
-                href={`/gui/software/article?parent=ai-engineering&slug=${slugify(articleTitle)}&title=${encodeURIComponent(articleTitle)}`}
+                href={`/gui/software/article?parent=ai-engineering&title=${encodeURIComponent(articleTitle)}`}
                 className="py-2 px-3 hover:bg-muted/70 rounded cursor-pointer transition font-vt323 text-[hsl(var(--platform))]"
               >
                 {articleTitle}

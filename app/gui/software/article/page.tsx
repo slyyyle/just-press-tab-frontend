@@ -11,13 +11,11 @@ function ArticleContent() {
   
   // Get query parameters
   const parent = searchParams.get('parent') || '';
-  const article = searchParams.get('slug') || '';
+  const title = searchParams.get('title') ? decodeURIComponent(searchParams.get('title')!) : '';
   
-  // Get the original title with proper capitalization and punctuation from query params
-  const originalTitle = searchParams.get('title') 
-    ? decodeURIComponent(searchParams.get('title')!)
-    : article.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-
+  // Generate slug from title for internal use if needed
+  const slugifiedTitle = title ? slugify(title) : '';
+  
   // Define known articles with their proper titles
   const knownArticles: Record<string, string> = {
     "wait-what-that-s-not-how-you-spell-chatbot": "Wait what? That's not how you spell chatbot!",
@@ -25,11 +23,11 @@ function ArticleContent() {
     "modeling-chains-of-thought-after-how-i-solve-problems": "Modeling Chains of Thought After How I Solve Problems"
   };
 
-  // Use known article title if available, otherwise use the query param or transformed slug
-  const displayTitle = knownArticles[article] || originalTitle;
+  // Display the title directly from the parameter
+  const displayTitle = title;
   
-  // Check if this is our chatbot article by comparing slug directly
-  const isChatbotArticle = article === "wait-what-that-s-not-how-you-spell-chatbot";
+  // Check if this is our chatbot article by comparing titles
+  const isChatbotArticle = title === "Wait what? That's not how you spell chatbot!";
 
   // State to track which sections are expanded
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
