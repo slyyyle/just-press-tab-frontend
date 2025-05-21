@@ -3,6 +3,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import { slugify } from '@/lib/slugify';
+import dynamic from 'next/dynamic';
+
+// Create dynamic components for heavy media
+const YouTubeEmbed = dynamic(() => import('@/components/YouTubeEmbed'), {
+  loading: () => <div className="w-full h-[315px] bg-muted animate-pulse rounded-md"></div>,
+  ssr: false
+});
 
 // Create a client component that uses useSearchParams
 function ArticleContent() {
@@ -139,9 +146,15 @@ function ArticleContent() {
                       src="/patternreco1.gif" 
                       alt="Pattern Recognition Visualization" 
                       width={500} 
-                      height={0}
-                      sizes="100vw"
-                      style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
+                      height={300}
+                      priority={true}
+                      sizes="(max-width: 768px) 100vw, 500px"
+                      style={{ 
+                        width: '100%', 
+                        maxWidth: '500px', 
+                        height: 'auto',
+                        objectFit: 'contain'
+                      }}
                       className="rounded-md shadow-md"
                     />
                   </div>
@@ -171,16 +184,11 @@ function ArticleContent() {
                   </p>
 
                   <div className="my-6 flex justify-center">
-                    <iframe 
-                      width="560" 
-                      height="315" 
-                      src="https://www.youtube.com/embed/4X6UHFa--Qc" 
-                      title="YouTube video player" 
-                      frameBorder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowFullScreen
+                    <YouTubeEmbed 
+                      videoId="4X6UHFa--Qc"
+                      title="YouTube video player"
                       className="rounded-md shadow-md"
-                    ></iframe>
+                    />
                   </div>
                 </>
               )}
@@ -198,8 +206,14 @@ function ArticleContent() {
                       alt="Decision tree visualization" 
                       width={500} 
                       height={300}
-                      sizes="100vw"
-                      style={{ width: '100%', maxWidth: '500px', height: 'auto' }}
+                      priority={true}
+                      sizes="(max-width: 768px) 100vw, 500px"
+                      style={{ 
+                        width: '100%', 
+                        maxWidth: '500px', 
+                        height: 'auto',
+                        objectFit: 'contain'
+                      }}
                       className="rounded-md shadow-md"
                     />
                   </div>
@@ -254,16 +268,11 @@ function ArticleContent() {
                   </p>
 
                   <div className="my-6 flex justify-center">
-                    <iframe 
-                      width="560" 
-                      height="315" 
-                      src="https://www.youtube.com/embed/Yeu9aMK6avU" 
+                    <YouTubeEmbed 
+                      videoId="Yeu9aMK6avU"
                       title="YouTube video player" 
-                      frameBorder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowFullScreen
                       className="rounded-md shadow-md"
-                    ></iframe>
+                    />
                   </div>
                 </>
               )}

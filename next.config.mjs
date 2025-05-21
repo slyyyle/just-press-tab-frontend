@@ -15,11 +15,24 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'just-press-tab.com',
+      },
+    ],
   },
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
+  },
+  // Increase page load performance for large assets
+  staticPageGenerationTimeout: 120,
+  compiler: {
+    // Enables the styled-components SWC transform
+    styledComponents: true,
   },
 }
 
