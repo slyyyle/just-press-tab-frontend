@@ -1,3 +1,7 @@
+import nextMDX from '@next/mdx';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
+
 let userConfig = undefined
 try {
   userConfig = await import('./v0-user-next.config')
@@ -34,6 +38,8 @@ const nextConfig = {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },
+  // Add pageExtensions to include .mdx
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 }
 
 mergeConfig(nextConfig, userConfig)
@@ -58,4 +64,16 @@ function mergeConfig(nextConfig, userConfig) {
   }
 }
 
-export default nextConfig
+// Initialize MDX with options
+const withMDX = nextMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    rehypePlugins: [],
+    // If you use `MDXProvider`, uncomment the following line.
+    // providerImportSource: "@mdx-js/react",
+  },
+});
+
+// Export the combined config
+export default withMDX(nextConfig);
