@@ -1,10 +1,11 @@
 "use client"
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import { slugify } from '@/lib/slugify';
 
-export default function ArticlePage() {
+// Create a client component that uses useSearchParams
+function ArticleContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -306,5 +307,37 @@ export default function ArticlePage() {
         </div>
       </div>
     </main>
+  );
+}
+
+// Loading fallback component
+function ArticleLoading() {
+  return (
+    <main className="min-h-screen bg-background py-16 px-4 software-theme">
+      <div className="max-w-3xl mx-auto">
+        <div className="h-10 w-24 bg-muted rounded animate-pulse mb-6"></div>
+        <div className="h-12 bg-muted rounded animate-pulse mb-3"></div>
+        <div className="flex flex-row justify-between mb-6">
+          <div className="h-8 w-40 bg-muted rounded animate-pulse"></div>
+          <div className="h-8 w-40 bg-muted rounded animate-pulse"></div>
+          <div className="h-8 w-40 bg-muted rounded animate-pulse"></div>
+        </div>
+        <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] space-y-6">
+          <div className="h-8 bg-muted rounded animate-pulse"></div>
+          <div className="h-20 bg-muted rounded animate-pulse"></div>
+          <div className="h-8 bg-muted rounded animate-pulse"></div>
+          <div className="h-20 bg-muted rounded animate-pulse"></div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function ArticlePage() {
+  return (
+    <Suspense fallback={<ArticleLoading />}>
+      <ArticleContent />
+    </Suspense>
   );
 } 
