@@ -2,15 +2,28 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { slugify } from '@/lib/slugify'; // Make sure this import works
 
 export default function ArticlePage({ params }: { params: Promise<{ parent: string; article: string }> }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { parent, article } = React.use(params);
-  const articleTitle = searchParams.get('title') ? decodeURIComponent(searchParams.get('title')!) : article;
+  
+  // Function to convert slug back to readable title with proper capitalization
+  const slugToTitle = (slug: string) => {
+    // Replace hyphens with spaces and capitalize first letter of each word
+    return slug.split('-').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  };
+  
+  // Get article title from slug or fallback to query param if provided
+  const articleTitle = searchParams.get('title') 
+    ? decodeURIComponent(searchParams.get('title')!) 
+    : slugToTitle(article);
 
-  // Only show the custom article body for the specific article
-  const isChatbotArticle = articleTitle === "Wait what? That's not how you spell chatbot!";
+  // Check if this is our chatbot article by comparing slug
+  const isChatbotArticle = slugify("Wait what? That's not how you spell chatbot!") === article;
 
   // State to track which sections are expanded
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
