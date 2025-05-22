@@ -56,7 +56,8 @@ async function getArticleData(slug: string) {
 
 // This is the Page Server Component
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const articleData = await getArticleData(params.slug);
+  const resolvedParams = await params;
+  const articleData = await getArticleData(resolvedParams.slug);
 
   if (!articleData || !articleData.code) {
     notFound(); // Trigger 404 if article data or code is missing
@@ -65,7 +66,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <Suspense fallback={<ArticleLoading />}>
       <ArticleContentWrapper 
-        slug={params.slug} 
+        slug={resolvedParams.slug} 
         frontmatter={articleData.frontmatter} 
         code={articleData.code} 
       />
