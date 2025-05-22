@@ -3,9 +3,11 @@ import path from 'path';
 import { bundleMDX } from 'mdx-bundler';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
-// Import the client components
-import { ArticleContent, ArticleLoading } from './article-layout-client';
+// Import the client components dynamically to disable SSR for ArticleContent
+const ArticleContent = dynamic(() => import('./article-layout-client').then(mod => mod.ArticleContent), { ssr: false });
+import { ArticleLoading } from './article-layout-client';
 
 // Interface for page props (params comes from Next.js)
 interface ArticlePageParams {
