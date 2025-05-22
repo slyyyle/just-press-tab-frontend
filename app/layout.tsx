@@ -6,16 +6,18 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { ClientLayout } from "@/components/client-layout"
 import { BgFxHandler } from "@/components/bg_fx_handler"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" })
 const vt323 = VT323({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-vt323",
+  display: "swap",
 })
 const pressStart2P = Press_Start_2P({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-press-start-2p",
+  display: "swap",
 })
 
 const navigation = [
