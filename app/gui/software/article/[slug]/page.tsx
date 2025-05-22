@@ -13,7 +13,7 @@ interface ArticlePageParams {
 }
 
 interface ArticlePageProps {
-  params: ArticlePageParams;
+  params: Promise<ArticlePageParams>;
 }
 
 const articlesDirectory = path.join(process.cwd(), 'content/software-articles');
