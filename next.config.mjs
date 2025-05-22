@@ -1,6 +1,4 @@
 import nextMDX from '@next/mdx';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
 let userConfig = undefined
 try {
@@ -68,7 +66,7 @@ function mergeConfig(nextConfig, userConfig) {
 const withMDX = nextMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    remarkPlugins: [],
     rehypePlugins: [],
     // If you use `MDXProvider`, uncomment the following line.
     // providerImportSource: "@mdx-js/react",

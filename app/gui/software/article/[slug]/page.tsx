@@ -1,9 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { bundleMDX } from 'mdx-bundler';
-import matter from 'gray-matter'; // For completeness, though bundleMDX handles frontmatter
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 
@@ -38,12 +35,6 @@ async function getArticleData(slug: string) {
       // Optional: if you have components in a specific directory for MDX
       // cwd: path.join(process.cwd(), 'components'), 
       mdxOptions(options, fm) {
-        options.remarkPlugins = [
-          ...(options.remarkPlugins ?? []),
-          remarkFrontmatter,
-          remarkMdxFrontmatter,
-        ];
-        // options.rehypePlugins = [...(options.rehypePlugins ?? [])]; // Add any rehype plugins here
         return options;
       },
       esbuildOptions: (options) => {
