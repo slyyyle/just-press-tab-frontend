@@ -40,7 +40,5 @@ module.exports = {
     maxInactiveAge: 25 * 1000,
     // number of pages that should be kept simultaneously without being disposed
     pagesBufferLength: 2,
-  },
-  // Optimize font loading
-  optimizeFonts: true,
+  }
 }; 
