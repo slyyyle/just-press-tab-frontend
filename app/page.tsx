@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation"
 import { Terminal, Monitor } from "lucide-react"
 import { useState } from "react"
-import { PatchNotesDialog } from "@/components/patch-notes-dialog"
 
 export default function LandingPage() {
   const router = useRouter()
@@ -57,12 +56,6 @@ export default function LandingPage() {
       >
         This site is under construction
       </button>
-
-      {/* Patch Notes Dialog */}
-      <PatchNotesDialog
-        isOpen={isPatchNotesOpen}
-        onClose={() => setIsPatchNotesOpen(false)}
-      />
     </div>
   )
 }
