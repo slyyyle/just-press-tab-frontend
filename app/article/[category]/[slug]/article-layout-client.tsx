@@ -70,12 +70,12 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
 
   const CollapsibleHeader = ({ id, title }: { id: string, title: string }) => (
     <h2 
-      className="text-2xl font-bold text-[hsl(var(--primary))] mb-2 mt-6 pt-4 pb-3 border-t border-b border-[hsl(var(--primary))] cursor-pointer flex justify-between items-center font-press-start-2p"
+      className="text-lg font-bold text-[hsl(var(--primary))] mb-2 mt-6 pt-4 pb-3 border-t border-b border-[hsl(var(--primary))] cursor-pointer flex justify-between items-center font-press-start-2p"
       onClick={() => toggleSection(id)}
     >
       {title}
       {isChatbotArticle && (
-        <span className="text-xl">
+        <span className="text-sm">
           {expandedSections[id] ? '▼' : '►'}
         </span>
       )}
@@ -109,7 +109,7 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
             </h2>
           </div>
           
-          <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
+          <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-h1:text-lg prose-h2:text-base prose-h3:text-sm prose-h4:text-sm prose-h5:text-xs prose-h6:text-xs prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
             <MDXContent components={{ Image, YouTubeEmbed, CollapsibleHeader }} />
           </div>
         </div>
@@ -141,7 +141,7 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
           </h2>
         </div>
         
-        <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
+        <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-h1:text-lg prose-h2:text-base prose-h3:text-sm prose-h4:text-sm prose-h5:text-xs prose-h6:text-xs prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
           <MDXContent components={{ Image, YouTubeEmbed, CollapsibleHeader }} />
         </div>
       </div>
