@@ -69,18 +69,22 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
   };
 
   const CollapsibleHeader = ({ id, title }: { id: string, title: string }) => (
-    <h2 
-      className="text-sm font-bold text-[hsl(var(--primary))] mb-2 mt-6 pt-4 pb-3 border-t border-b border-[hsl(var(--primary))] cursor-pointer flex justify-between items-center font-press-start-2p scale-90 transform origin-left w-full -mx-6 px-6"
-      style={{ fontSize: '12px' }}
-      onClick={() => toggleSection(id)}
-    >
-      {title}
-      {isChatbotArticle && (
-        <span className="text-xs" style={{ fontSize: '10px' }}>
-          {expandedSections[id] ? '▼' : '►'}
-        </span>
-      )}
-    </h2>
+    <div className="relative -mx-6 my-6">
+      <div className="absolute inset-x-0 top-0 border-t border-[hsl(var(--primary))]"></div>
+      <div className="absolute inset-x-0 bottom-0 border-b border-[hsl(var(--primary))]"></div>
+      <h2 
+        className="text-sm font-bold text-[hsl(var(--primary))] py-4 px-6 cursor-pointer flex justify-between items-center font-press-start-2p scale-90 transform origin-left bg-card"
+        style={{ fontSize: '12px' }}
+        onClick={() => toggleSection(id)}
+      >
+        {title}
+        {isChatbotArticle && (
+          <span className="text-xs" style={{ fontSize: '10px' }}>
+            {expandedSections[id] ? '▼' : '►'}
+          </span>
+        )}
+      </h2>
+    </div>
   );
 
   const MDXContent = useMemo(() => getMDXComponent(code), [code]);
