@@ -8,34 +8,62 @@ import Link from 'next/link'
 import { slugify } from '@/lib/slugify'
 
 export default function SoftwarePage() {
-  const getInitialSection = () => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('software_selectedSection') || "Web Development";
-    }
-    return "Web Development";
-  };
-  const getInitialExpanded = (key: string) => {
-    if (typeof window !== 'undefined') {
-      const val = localStorage.getItem(key);
-      return val === null || val === 'null' ? null : Number(val);
-    }
-    return null;
-  };
+  const [mounted, setMounted] = useState(false);
+  const [selectedSection, setSelectedSection] = useState("Web Development");
+  const [expandedWebDev, setExpandedWebDev] = useState<number | null>(null);
+  const [expandedCliTools, setExpandedCliTools] = useState<number | null>(null);
+  const [expandedSystemCustom, setExpandedSystemCustom] = useState<number | null>(null);
 
-  const [selectedSection, setSelectedSection] = useState(getInitialSection);
-  const [expandedWebDev, setExpandedWebDev] = useState(() => getInitialExpanded('software_expandedWebDev'));
-  const [expandedCliTools, setExpandedCliTools] = useState(() => getInitialExpanded('software_expandedCliTools'));
-  const [expandedSystemCustom, setExpandedSystemCustom] = useState(() => getInitialExpanded('software_expandedSystemCustom'));
+  // Ensure we're mounted and load from localStorage
+  useEffect(() => {
+    setMounted(true);
+    const savedSection = localStorage.getItem('software_selectedSection');
+    const savedWebDev = localStorage.getItem('software_expandedWebDev');
+    const savedCliTools = localStorage.getItem('software_expandedCliTools');
+    const savedSystemCustom = localStorage.getItem('software_expandedSystemCustom');
+    
+    if (savedSection) setSelectedSection(savedSection);
+    if (savedWebDev && savedWebDev !== 'null') setExpandedWebDev(Number(savedWebDev));
+    if (savedCliTools && savedCliTools !== 'null') setExpandedCliTools(Number(savedCliTools));
+    if (savedSystemCustom && savedSystemCustom !== 'null') setExpandedSystemCustom(Number(savedSystemCustom));
+  }, []);
 
   // Persist state to localStorage on change
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('software_selectedSection', selectedSection)
-      localStorage.setItem('software_expandedWebDev', String(expandedWebDev))
-      localStorage.setItem('software_expandedCliTools', String(expandedCliTools))
-      localStorage.setItem('software_expandedSystemCustom', String(expandedSystemCustom))
+    if (mounted) {
+      localStorage.setItem('software_selectedSection', selectedSection);
+      localStorage.setItem('software_expandedWebDev', String(expandedWebDev));
+      localStorage.setItem('software_expandedCliTools', String(expandedCliTools));
+      localStorage.setItem('software_expandedSystemCustom', String(expandedSystemCustom));
     }
-  }, [selectedSection, expandedWebDev, expandedCliTools, expandedSystemCustom])
+  }, [mounted, selectedSection, expandedWebDev, expandedCliTools, expandedSystemCustom]);
+
+  // Show loading state or render null during hydration
+  if (!mounted) {
+    return (
+      <main className="min-h-screen bg-background py-16 px-4 software-theme">
+        <div className="max-w-6xl mx-auto">
+          <PageHeader 
+            title="Software" 
+            subtitle="Coding projects, tools, and development" 
+            className="text-primary"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-card border-2 border-primary rounded-md overflow-hidden pixel-corners animate-pulse">
+                <div className="p-6 flex flex-col items-center text-center h-full">
+                  <div className="bg-muted p-4 rounded-full mb-4 w-16 h-16"></div>
+                  <div className="h-6 bg-muted rounded mb-3 w-3/4"></div>
+                  <div className="h-20 bg-muted rounded mb-4 w-full"></div>
+                  <div className="h-10 bg-muted rounded w-24"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   // Hardcoded software projects
   const softwareProjects = [

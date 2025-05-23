@@ -233,23 +233,23 @@ export default function MusicPage() {
 
   // Add event listeners for volume dragging
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleMouseMove = (e: MouseEvent) => {
-        if (isVolumeDragging && volumeBarRef.current) {
-          handleVolumeChange(e as unknown as React.MouseEvent<HTMLDivElement>)
-        }
-      }
-      const handleMouseUp = () => {
-        setIsVolumeDragging(false)
-      }
-      window.addEventListener('mousemove', handleMouseMove)
-      window.addEventListener('mouseup', handleMouseUp)
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove)
-        window.removeEventListener('mouseup', handleMouseUp)
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isVolumeDragging && volumeBarRef.current) {
+        handleVolumeChange(e as unknown as React.MouseEvent<HTMLDivElement>)
       }
     }
-  }, [])
+    const handleMouseUp = () => {
+      setIsVolumeDragging(false)
+    }
+    
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isVolumeDragging])
 
   // Hardcoded music projects
   const musicProjects = [

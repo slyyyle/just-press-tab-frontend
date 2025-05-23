@@ -25,7 +25,16 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
 
   const displayTitle = frontmatter.title || articleSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const articleAuthor = frontmatter.author || "Kyle Hammitt";
-  const articleDate = frontmatter.date ? new Date(frontmatter.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : "N/A";
+  
+  // Simple date formatting that avoids hydration mismatches
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  };
+  
+  const articleDate = frontmatter.date ? formatDate(frontmatter.date) : "N/A";
   const articleCategory = frontmatter.category || 'software';
 
   const isChatbotArticle = articleSlug === "wait-what-that-s-not-how-you-spell-chatbot";
