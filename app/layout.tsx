@@ -29,6 +29,21 @@ const navigation = [
 export const metadata: Metadata = {
   title: "Just Press Tab",
   description: "Exploring applications of AI, everywhere!",
+  openGraph: {
+    title: "Just Press Tab",
+    description: "Exploring applications of AI, everywhere!",
+    url: "https://just-press-tab.com",
+    siteName: "Just Press Tab",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Just Press Tab",
+    description: "Exploring applications of AI, everywhere!",
+    creator: "@slyyyle",
+  },
+  metadataBase: new URL("https://just-press-tab.com"),
 }
 
 export default function RootLayout({
