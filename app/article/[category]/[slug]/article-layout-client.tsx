@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -66,7 +65,6 @@ interface ArticleContentProps {
 }
 
 export function ArticleContent({ category, slug, frontmatter, code }: ArticleContentProps) {
-  const router = useRouter();
   const articleSlug = slug;
 
   const displayTitle = frontmatter.title || articleSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
