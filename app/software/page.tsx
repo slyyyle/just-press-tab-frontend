@@ -10,33 +10,53 @@ import { slugify } from '@/lib/slugify'
 export default function SoftwarePage() {
   const [mounted, setMounted] = useState(false);
   const [selectedSection, setSelectedSection] = useState("Web Development");
-  const [expandedWebDev, setExpandedWebDev] = useState<number | null>(null);
-  const [expandedCliTools, setExpandedCliTools] = useState<number | null>(null);
-  const [expandedSystemCustom, setExpandedSystemCustom] = useState<number | null>(null);
+  const [expandedSections, setExpandedSections] = useState<{[key: string]: number | null}>({});
 
-  // Ensure we're mounted and load from localStorage
+  // Handle mounting and localStorage loading properly
   useEffect(() => {
     setMounted(true);
-    const savedSection = localStorage.getItem('software_selectedSection');
-    const savedWebDev = localStorage.getItem('software_expandedWebDev');
-    const savedCliTools = localStorage.getItem('software_expandedCliTools');
-    const savedSystemCustom = localStorage.getItem('software_expandedSystemCustom');
     
-    if (savedSection) setSelectedSection(savedSection);
-    if (savedWebDev && savedWebDev !== 'null') setExpandedWebDev(Number(savedWebDev));
-    if (savedCliTools && savedCliTools !== 'null') setExpandedCliTools(Number(savedCliTools));
-    if (savedSystemCustom && savedSystemCustom !== 'null') setExpandedSystemCustom(Number(savedSystemCustom));
+    try {
+      const savedSection = localStorage.getItem('software_selectedSection');
+      const savedExpanded = localStorage.getItem('software_expandedSections');
+      
+      if (savedSection) {
+        setSelectedSection(savedSection);
+      }
+      
+      if (savedExpanded) {
+        setExpandedSections(JSON.parse(savedExpanded));
+      }
+    } catch (error) {
+      console.error('Error loading software page state:', error);
+    }
   }, []);
 
-  // Persist state to localStorage on change
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('software_selectedSection', selectedSection);
-      localStorage.setItem('software_expandedWebDev', String(expandedWebDev));
-      localStorage.setItem('software_expandedCliTools', String(expandedCliTools));
-      localStorage.setItem('software_expandedSystemCustom', String(expandedSystemCustom));
+  // Persist state changes to localStorage
+  const updateExpandedState = (sectionKey: string, itemId: number) => {
+    setExpandedSections(prev => {
+      const isCurrentlyExpanded = prev[sectionKey] === itemId;
+      const newState = { ...prev, [sectionKey]: isCurrentlyExpanded ? null : itemId };
+      
+      // Only update localStorage after state is set
+      try {
+        localStorage.setItem('software_expandedSections', JSON.stringify(newState));
+      } catch (error) {
+        console.error('Error saving expanded state:', error);
+      }
+      
+      return newState;
+    });
+  };
+
+  const updateSelectedSection = (section: string) => {
+    setSelectedSection(section);
+    try {
+      localStorage.setItem('software_selectedSection', section);
+    } catch (error) {
+      console.error('Error saving selected section:', error);
     }
-  }, [mounted, selectedSection, expandedWebDev, expandedCliTools, expandedSystemCustom]);
+  };
 
   // Show loading state or render null during hydration
   if (!mounted) {
@@ -189,7 +209,7 @@ export default function SoftwarePage() {
   ]
 
   const handleExplore = (title: string) => {
-    setSelectedSection(title)
+    updateSelectedSection(title)
   }
 
   return (
@@ -241,20 +261,20 @@ export default function SoftwarePage() {
                 key={item.id}
                 className="flex flex-col p-3 bg-muted/50 rounded-md transition-colors hover:bg-primary/10 mb-2"
               >
-                <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => setExpandedWebDev(expandedWebDev === item.id ? null : item.id)}>
+                <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => updateExpandedState("Web Development", item.id)}>
                   <div className="flex-1 pr-4 min-w-0">
                     <h4 className={`font-vt323 ${item.nameClass} break-words`}>{item.name}</h4>
                     <p className={`font-vt323 ${item.descriptionClass} break-words`}>{item.description}</p>
                   </div>
                   <div className="flex-shrink-0 ml-4">
-                    {expandedWebDev === item.id ? (
+                    {expandedSections["Web Development"] === item.id ? (
                       <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     ) : (
                       <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     )}
                   </div>
                 </div>
-                {expandedWebDev === item.id && (
+                {expandedSections["Web Development"] === item.id && (
                   <div className="mt-2 ml-6 p-2 bg-background rounded border border-dashed border-[hsl(var(--primary))]">
                     <span className="font-vt323 text-[hsl(var(--platform))]">Placeholder for nested content</span>
                   </div>
@@ -266,20 +286,20 @@ export default function SoftwarePage() {
                 key={item.id}
                 className="flex flex-col p-3 bg-muted/50 rounded-md transition-colors hover:bg-primary/10 mb-2"
               >
-                <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => setExpandedCliTools(expandedCliTools === item.id ? null : item.id)}>
+                <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => updateExpandedState("CLI Tools", item.id)}>
                   <div className="flex-1 pr-4 min-w-0">
                     <h4 className={`font-vt323 ${item.nameClass} break-words`}>{item.name}</h4>
                     <p className={`font-vt323 ${item.descriptionClass} break-words`}>{item.description}</p>
                   </div>
                   <div className="flex-shrink-0 ml-4">
-                    {expandedCliTools === item.id ? (
+                    {expandedSections["CLI Tools"] === item.id ? (
                       <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     ) : (
                       <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     )}
                   </div>
                 </div>
-                {expandedCliTools === item.id && item.extender}
+                {expandedSections["CLI Tools"] === item.id && item.extender}
               </div>
             ))}
             {selectedSection === "System Customization" && systemCustomContent.map((item) => (
@@ -287,20 +307,20 @@ export default function SoftwarePage() {
                 key={item.id}
                 className="flex flex-col p-3 bg-muted/50 rounded-md transition-colors hover:bg-primary/10 mb-2"
               >
-                <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => setExpandedSystemCustom(expandedSystemCustom === item.id ? null : item.id)}>
+                <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => updateExpandedState("System Customization", item.id)}>
                   <div className="flex-1 pr-4 min-w-0">
                     <h4 className={`font-vt323 ${item.nameClass} break-words`}>{item.name}</h4>
                     <p className={`font-vt323 ${item.descriptionClass} break-words`}>{item.description}</p>
                   </div>
                   <div className="flex-shrink-0 ml-4">
-                    {expandedSystemCustom === item.id ? (
+                    {expandedSections["System Customization"] === item.id ? (
                       <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     ) : (
                       <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     )}
                   </div>
                 </div>
-                {expandedSystemCustom === item.id && (
+                {expandedSections["System Customization"] === item.id && (
                   <div className="mt-2 ml-6 p-2 bg-background rounded border border-dashed border-[hsl(var(--primary))]">
                     <span className="font-vt323 text-[hsl(var(--platform))]">Placeholder for nested content</span>
                   </div>
