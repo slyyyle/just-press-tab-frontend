@@ -9,6 +9,7 @@ import { ArticleLoading } from './article-layout-client';
 
 // Interface for page props (params comes from Next.js)
 interface ArticlePageParams {
+  category: string;
   slug: string;
 }
 
@@ -18,14 +19,14 @@ interface ArticlePageProps {
 
 const articlesDirectory = path.join(process.cwd(), 'content/software-articles');
 
-async function getArticleData(slug: string) {
-  const fullPath = path.join(articlesDirectory, `${slug}.mdx`);
+async function getArticleData(category: string, slug: string) {
+  const fullPath = path.join(articlesDirectory, category, `${slug}.mdx`);
   let fileContents;
   try {
     fileContents = fs.readFileSync(fullPath, 'utf8');
   } catch (err) {
     // If file not found, trigger a 404
-    console.error(`Article not found for slug: ${slug}`, err);
+    console.error(`Article not found for category: ${category}, slug: ${slug}`, err);
     return null; 
   }
 
@@ -48,7 +49,7 @@ async function getArticleData(slug: string) {
     });
     return { slug, frontmatter, code };
   } catch (error) {
-    console.error(`Error bundling MDX for slug ${slug}:`, error);
+    console.error(`Error bundling MDX for category ${category}, slug ${slug}:`, error);
     // Depending on the error, you might want to throw it or return null/trigger notFound()
     return null; // Or throw error to be caught by Next.js error boundary
   }
@@ -57,7 +58,7 @@ async function getArticleData(slug: string) {
 // This is the Page Server Component
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const resolvedParams = await params;
-  const articleData = await getArticleData(resolvedParams.slug);
+  const articleData = await getArticleData(resolvedParams.category, resolvedParams.slug);
 
   if (!articleData || !articleData.code) {
     notFound(); // Trigger 404 if article data or code is missing
@@ -66,6 +67,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <Suspense fallback={<ArticleLoading />}>
       <ArticleContentWrapper 
+        category={resolvedParams.category}
         slug={resolvedParams.slug} 
         frontmatter={articleData.frontmatter} 
         code={articleData.code} 
@@ -77,12 +79,26 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 // Optional: Function to generate static paths if you want to pre-render articles at build time
 export async function generateStaticParams() {
   try {
-    const files = fs.readdirSync(articlesDirectory);
-    return files
-      .filter(file => file.endsWith('.mdx'))
-      .map(file => ({
-        slug: file.replace(/\.mdx$/, ''),
-      }));
+    const categories = fs.readdirSync(articlesDirectory);
+    const params: { category: string; slug: string; }[] = [];
+    
+    for (const category of categories) {
+      const categoryPath = path.join(articlesDirectory, category);
+      const stat = fs.statSync(categoryPath);
+      
+      if (stat.isDirectory()) {
+        const files = fs.readdirSync(categoryPath);
+        const slugs = files
+          .filter(file => file.endsWith('.mdx'))
+          .map(file => file.replace(/\.mdx$/, ''));
+        
+        for (const slug of slugs) {
+          params.push({ category, slug });
+        }
+      }
+    }
+    
+    return params;
   } catch (error) {
     console.error("Error reading articles directory for generateStaticParams:", error);
     return []; // Return empty array on error
