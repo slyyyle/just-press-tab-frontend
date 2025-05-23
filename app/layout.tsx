@@ -28,7 +28,7 @@ const navigation = [
 
 export const metadata: Metadata = {
   title: "Just Press Tab",
-  description: "A modern terminal interface for the web",
+  description: "Exploring applications of AI, everywhere!",
 }
 
 export default function RootLayout({
