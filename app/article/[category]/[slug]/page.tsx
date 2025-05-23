@@ -42,7 +42,15 @@ async function getArticleData(category: string, slug: string) {
           '.js': 'jsx',
           '.ts': 'tsx',
         };
+        // Provide React as a global to prevent context issues
+        options.define = {
+          ...options.define,
+          'process.env.NODE_ENV': '"production"',
+        };
         return options;
+      },
+      globals: {
+        'react': 'React',
       },
     });
     return { slug, frontmatter, code };
@@ -109,8 +117,7 @@ export async function generateStaticParams() {
         const files = fs.readdirSync(categoryPath);
         const slugs = files
           .filter(file => file.endsWith('.mdx'))
-          .map(file => file.replace(/\.mdx$/, ''))
-          .filter(slug => slug !== 'wait-what-that-s-not-how-you-spell-chatbot'); // Exclude problematic article
+          .map(file => file.replace(/\.mdx$/, ''));
         
         for (const slug of slugs) {
           params.push({ category, slug });
