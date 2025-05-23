@@ -37,99 +37,106 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
   const articleDate = frontmatter.date ? formatDate(frontmatter.date) : "N/A";
   const articleCategory = frontmatter.category || 'software';
 
-  const isChatbotArticle = articleSlug === "wait-what-that-s-not-how-you-spell-chatbot";
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
 
   useEffect(() => {
-    if (isChatbotArticle) {
-      try {
-        const savedState = localStorage.getItem('expandedSections_chatbot');
-        if (savedState) {
-          setExpandedSections(JSON.parse(savedState));
-        } else {
-          const initialState = {
-            'intro': false, 'utility': false, 'language': false, 'decisions': false,
-            'examples': false, 'roadMeeting': false, 'gini': false, 
-            'highLevelPatterns': false, 'chatbots': false, 'conclusion': false
-          };
-          setExpandedSections(initialState);
-          localStorage.setItem('expandedSections_chatbot', JSON.stringify(initialState));
-        }
-      } catch (error) {
-        console.error("Error loading section states:", error);
-        const initialState = { 
-            'intro': false, 'utility': false, 'language': false, 'decisions': false,
-            'examples': false, 'roadMeeting': false, 'gini': false, 
-            'highLevelPatterns': false, 'chatbots': false, 'conclusion': false
+    try {
+      const savedState = localStorage.getItem(`expandedSections_${articleSlug}`);
+      if (savedState) {
+        setExpandedSections(JSON.parse(savedState));
+      } else {
+        // Default all sections to expanded for better UX
+        const initialState = {
+          'intro': true, 'utility': true, 'language': true, 'decisions': true,
+          'examples': true, 'roadMeeting': true, 'gini': true, 
+          'highLevelPatterns': true, 'chatbots': true, 'conclusion': true
         };
         setExpandedSections(initialState);
+        localStorage.setItem(`expandedSections_${articleSlug}`, JSON.stringify(initialState));
       }
+    } catch (error) {
+      console.error("Error loading section states:", error);
+      const initialState = { 
+          'intro': true, 'utility': true, 'language': true, 'decisions': true,
+          'examples': true, 'roadMeeting': true, 'gini': true, 
+          'highLevelPatterns': true, 'chatbots': true, 'conclusion': true
+      };
+      setExpandedSections(initialState);
     }
-  }, [isChatbotArticle]);
+  }, [articleSlug]);
 
   const toggleSection = (sectionId: string) => {
-    if (isChatbotArticle) {
-        setExpandedSections(prev => {
-        const newState = { ...prev, [sectionId]: !prev[sectionId] };
-        localStorage.setItem('expandedSections_chatbot', JSON.stringify(newState));
-        return newState;
-        });
-    }
+    setExpandedSections(prev => {
+      const currentState = prev[sectionId] !== undefined ? prev[sectionId] : true;
+      const newState = { ...prev, [sectionId]: !currentState };
+      localStorage.setItem(`expandedSections_${articleSlug}`, JSON.stringify(newState));
+      return newState;
+    });
   };
 
-  const CollapsibleHeader = ({ id, title }: { id: string, title: string }) => (
-    <div className="relative -mx-6 my-6">
-      <div className="absolute inset-x-0 top-0 border-t border-[hsl(var(--primary))]"></div>
-      <div className="absolute inset-x-0 bottom-0 border-b border-[hsl(var(--primary))]"></div>
-      <h2 
-        className="text-sm font-bold text-[hsl(var(--primary))] py-4 px-6 cursor-pointer flex justify-between items-center font-press-start-2p scale-90 transform origin-left bg-card"
-        style={{ fontSize: '12px' }}
-        onClick={() => toggleSection(id)}
-      >
-        {title}
-        {isChatbotArticle && (
+  const CollapsibleHeader = ({ id, title }: { id: string, title: string }) => {
+    const isExpanded = expandedSections[id] !== undefined ? expandedSections[id] : true;
+    return (
+      <div className="relative -mx-6 my-6">
+        <div className="absolute inset-x-0 top-0 border-t border-[hsl(var(--primary))]"></div>
+        <div className="absolute inset-x-0 bottom-0 border-b border-[hsl(var(--primary))]"></div>
+        <h2 
+          className="text-sm font-bold text-[hsl(var(--primary))] py-4 px-6 cursor-pointer flex justify-between items-center font-press-start-2p scale-90 transform origin-left bg-card"
+          style={{ fontSize: '12px' }}
+          onClick={() => toggleSection(id)}
+        >
+          {title}
           <span className="text-xs" style={{ fontSize: '10px' }}>
-            {expandedSections[id] ? '▼' : '►'}
+            {isExpanded ? '▼' : '►'}
           </span>
+        </h2>
+      </div>
+    );
+  };
+
+  // Simple component to wrap content that should be collapsible
+  const CollapsibleContent = ({ sectionId, children }: { sectionId: string, children: React.ReactNode }) => {
+    const isExpanded = expandedSections[sectionId] !== undefined ? expandedSections[sectionId] : true;
+    return (
+      <div className={`transition-all duration-300 overflow-hidden ${isExpanded ? 'max-h-none opacity-100' : 'max-h-0 opacity-0'}`}>
+        {children}
+      </div>
+    );
+  };
+
+  // For the chatbot article, we need to track which section content should be shown
+  const ChatbotAwareWrapper = ({ children }: { children: React.ReactNode }) => {
+    return <>{children}</>;
+  };
+
+  const CollapsibleSection = ({ id, title, children }: { id: string, title: string, children: React.ReactNode }) => {
+    const isExpanded = expandedSections[id] !== undefined ? expandedSections[id] : true;
+    return (
+      <div className="my-6">
+        <div className="relative -mx-6">
+          <div className="absolute inset-x-0 top-0 border-t border-[hsl(var(--primary))]"></div>
+          <div className="absolute inset-x-0 bottom-0 border-b border-[hsl(var(--primary))]"></div>
+          <h2 
+            className="text-sm font-bold text-[hsl(var(--primary))] py-4 px-6 cursor-pointer flex justify-between items-center font-press-start-2p scale-90 transform origin-left bg-card"
+            style={{ fontSize: '12px' }}
+            onClick={() => toggleSection(id)}
+          >
+            {title}
+            <span className="text-xs" style={{ fontSize: '10px' }}>
+              {isExpanded ? '▼' : '►'}
+            </span>
+          </h2>
+        </div>
+        {isExpanded && (
+          <div className="mt-4">
+            {children}
+          </div>
         )}
-      </h2>
-    </div>
-  );
+      </div>
+    );
+  };
 
   const MDXContent = useMemo(() => getMDXComponent(code), [code]);
-
-  if (isChatbotArticle) {
-    return (
-      <main className="min-h-screen bg-background py-16 px-4 software-theme">
-        <div className="max-w-3xl mx-auto">
-          <button
-            onClick={() => router.back()}
-            className="mb-6 px-4 py-2 bg-muted text-[hsl(var(--primary))] rounded font-vt323 hover:bg-primary/10 transition"
-          >
-            ← Back
-          </button>
-          <h1 className="font-press-start-2p text-3xl mb-3 text-[hsl(var(--primary))]">
-            {displayTitle}
-          </h1>
-          <div className="flex flex-row justify-between mb-6">
-            <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
-              Author: {articleAuthor}
-            </h2>
-            <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
-              Date: {articleDate}
-            </h2>
-            <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
-              Category: {articleCategory}
-            </h2>
-          </div>
-          
-          <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-h1:text-sm prose-h2:text-xs prose-h3:text-xs prose-h4:text-xs prose-h5:text-xs prose-h6:text-xs prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
-            <MDXContent components={{ Image, YouTubeEmbed, CollapsibleHeader }} />
-          </div>
-        </div>
-      </main>
-    );
-  }
 
   return (
     <main className="min-h-screen bg-background py-16 px-4 software-theme">
@@ -156,7 +163,9 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
         </div>
         
         <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-h1:text-sm prose-h2:text-xs prose-h3:text-xs prose-h4:text-xs prose-h5:text-xs prose-h6:text-xs prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
-          <MDXContent components={{ Image, YouTubeEmbed, CollapsibleHeader }} />
+          <ChatbotAwareWrapper>
+            <MDXContent components={{ Image, YouTubeEmbed, CollapsibleHeader, CollapsibleSection, CollapsibleContent }} />
+          </ChatbotAwareWrapper>
         </div>
       </div>
     </main>
