@@ -14,6 +14,19 @@ const YouTubeEmbed = dynamic(() => import('@/components/YouTubeEmbed'), {
   ssr: false
 });
 
+// Dynamic MDX content wrapper
+const MDXContentWrapper = dynamic(() => Promise.resolve(({ code }: { code: string }) => {
+  const MDXContent = useMemo(() => getMDXComponent(code), [code]);
+  return (
+    <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-base prose-h5:text-sm prose-h6:text-xs prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans prose-a:hover:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
+      <MDXContent components={{ Image, YouTubeEmbed, Accordion, AccordionItem, AccordionTrigger, AccordionContent, Collapsible, CollapsibleTrigger, CollapsibleContent }} />
+    </div>
+  );
+}), {
+  loading: () => <ArticleLoading />,
+  ssr: false
+});
+
 interface ArticleContentProps {
   category: string;
   slug: string;
@@ -24,11 +37,6 @@ interface ArticleContentProps {
 export function ArticleContent({ category, slug, frontmatter, code }: ArticleContentProps) {
   const router = useRouter();
   const articleSlug = slug;
-  const [isMounted, setIsMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const displayTitle = frontmatter.title || articleSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const articleAuthor = frontmatter.author || "Kyle Hammitt";
@@ -43,12 +51,6 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
   
   const articleDate = frontmatter.date ? formatDate(frontmatter.date) : "N/A";
   const articleCategory = frontmatter.category || 'software';
-
-  const MDXContent = useMemo(() => getMDXComponent(code), [code]);
-
-  if (!isMounted) {
-    return <ArticleLoading />;
-  }
 
   return (
     <main className="min-h-screen bg-background py-16 px-4 software-theme">
@@ -74,9 +76,7 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
           </h2>
         </div>
         
-        <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-headings:font-press-start-2p prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-base prose-h5:text-sm prose-h6:text-xs prose-p:text-[hsl(var(--platform))] prose-p:font-sans prose-strong:text-[hsl(var(--primary))] prose-strong:font-sans prose-a:text-[hsl(var(--accent))] prose-a:font-sans prose-a:hover:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-blockquote:font-sans prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ul:font-sans prose-ol:text-[hsl(var(--platform))] prose-ol:font-sans prose-li:text-[hsl(var(--platform))] prose-li:font-sans">
-          <MDXContent components={{ Image, YouTubeEmbed, Accordion, AccordionItem, AccordionTrigger, AccordionContent, Collapsible, CollapsibleTrigger, CollapsibleContent }} />
-        </div>
+        <MDXContentWrapper code={code} />
       </div>
     </main>
   );
