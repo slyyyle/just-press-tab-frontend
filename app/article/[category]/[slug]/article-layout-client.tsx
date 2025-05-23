@@ -24,6 +24,11 @@ interface ArticleContentProps {
 export function ArticleContent({ category, slug, frontmatter, code }: ArticleContentProps) {
   const router = useRouter();
   const articleSlug = slug;
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const displayTitle = frontmatter.title || articleSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const articleAuthor = frontmatter.author || "Kyle Hammitt";
@@ -40,6 +45,10 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
   const articleCategory = frontmatter.category || 'software';
 
   const MDXContent = useMemo(() => getMDXComponent(code), [code]);
+
+  if (!isMounted) {
+    return <ArticleLoading />;
+  }
 
   return (
     <main className="min-h-screen bg-background py-16 px-4 software-theme">
