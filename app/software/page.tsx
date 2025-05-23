@@ -242,15 +242,15 @@ export default function SoftwarePage() {
                 className="flex flex-col p-3 bg-muted/50 rounded-md transition-colors hover:bg-primary/10 mb-2"
               >
                 <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => setExpandedWebDev(expandedWebDev === item.id ? null : item.id)}>
-                  <div className="flex-1 pr-4">
-                    <h4 className={`font-vt323 ${item.nameClass}`}>{item.name}</h4>
-                    <p className={`font-vt323 ${item.descriptionClass}`}>{item.description}</p>
+                  <div className="flex-1 pr-4 min-w-0">
+                    <h4 className={`font-vt323 ${item.nameClass} break-words`}>{item.name}</h4>
+                    <p className={`font-vt323 ${item.descriptionClass} break-words`}>{item.description}</p>
                   </div>
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 ml-4">
                     {expandedWebDev === item.id ? (
-                      <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))]" />
+                      <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     ) : (
-                      <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))]" />
+                      <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     )}
                   </div>
                 </div>
@@ -267,15 +267,15 @@ export default function SoftwarePage() {
                 className="flex flex-col p-3 bg-muted/50 rounded-md transition-colors hover:bg-primary/10 mb-2"
               >
                 <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => setExpandedCliTools(expandedCliTools === item.id ? null : item.id)}>
-                  <div className="flex-1 pr-4">
-                    <h4 className={`font-vt323 ${item.nameClass}`}>{item.name}</h4>
-                    <p className={`font-vt323 ${item.descriptionClass}`}>{item.description}</p>
+                  <div className="flex-1 pr-4 min-w-0">
+                    <h4 className={`font-vt323 ${item.nameClass} break-words`}>{item.name}</h4>
+                    <p className={`font-vt323 ${item.descriptionClass} break-words`}>{item.description}</p>
                   </div>
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 ml-4">
                     {expandedCliTools === item.id ? (
-                      <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))]" />
+                      <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     ) : (
-                      <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))]" />
+                      <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     )}
                   </div>
                 </div>
@@ -288,15 +288,15 @@ export default function SoftwarePage() {
                 className="flex flex-col p-3 bg-muted/50 rounded-md transition-colors hover:bg-primary/10 mb-2"
               >
                 <div className="flex items-center justify-between cursor-pointer w-full" onClick={() => setExpandedSystemCustom(expandedSystemCustom === item.id ? null : item.id)}>
-                  <div className="flex-1 pr-4">
-                    <h4 className={`font-vt323 ${item.nameClass}`}>{item.name}</h4>
-                    <p className={`font-vt323 ${item.descriptionClass}`}>{item.description}</p>
+                  <div className="flex-1 pr-4 min-w-0">
+                    <h4 className={`font-vt323 ${item.nameClass} break-words`}>{item.name}</h4>
+                    <p className={`font-vt323 ${item.descriptionClass} break-words`}>{item.description}</p>
                   </div>
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 ml-4">
                     {expandedSystemCustom === item.id ? (
-                      <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))]" />
+                      <ChevronUp className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     ) : (
-                      <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))]" />
+                      <ChevronDown className="h-6 w-6 text-[hsl(var(--primary))] !flex-shrink-0" />
                     )}
                   </div>
                 </div>
