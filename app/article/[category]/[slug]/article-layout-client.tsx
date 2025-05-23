@@ -86,12 +86,6 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
   return (
     <main className="min-h-screen bg-background py-16 px-4 software-theme">
       <div className="max-w-3xl mx-auto">
-        <button
-          onClick={() => router.back()}
-          className="mb-6 px-4 py-2 bg-muted text-[hsl(var(--primary))] rounded font-vt323 hover:bg-primary/10 transition"
-        >
-          ← Back
-        </button>
         <h1 className="font-press-start-2p text-3xl mb-3 text-[hsl(var(--primary))]">
           {displayTitle}
         </h1>
