@@ -8,6 +8,37 @@ import { getMDXComponent } from 'mdx-bundler/client';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
 
+// Error boundary component
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.error('Error loading MDX content:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="bg-card p-6 rounded-md border border-red-500 text-red-500">
+          Error loading content. Please refresh the page.
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 // Dynamic import for YouTubeEmbed
 const YouTubeEmbed = dynamic(() => import('@/components/YouTubeEmbed'), {
   loading: () => <div className="w-full h-[315px] bg-muted animate-pulse rounded-md"></div>,
@@ -76,7 +107,9 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
           </h2>
         </div>
         
-        <MDXContentWrapper code={code} />
+        <ErrorBoundary>
+          <MDXContentWrapper code={code} />
+        </ErrorBoundary>
       </div>
     </main>
   );
