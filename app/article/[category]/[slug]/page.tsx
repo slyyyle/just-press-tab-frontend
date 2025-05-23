@@ -17,7 +17,7 @@ interface ArticlePageProps {
   params: Promise<ArticlePageParams>;
 }
 
-const articlesDirectory = path.join(process.cwd(), 'content/software-articles');
+const articlesDirectory = path.join(process.cwd(), 'content');
 
 async function getArticleData(category: string, slug: string) {
   const fullPath = path.join(articlesDirectory, category, `${slug}.mdx`);
@@ -33,8 +33,6 @@ async function getArticleData(category: string, slug: string) {
   try {
     const { code, frontmatter } = await bundleMDX({
       source: fileContents,
-      // Optional: if you have components in a specific directory for MDX
-      // cwd: path.join(process.cwd(), 'components'), 
       mdxOptions(options, fm) {
         return options;
       },
@@ -50,8 +48,29 @@ async function getArticleData(category: string, slug: string) {
     return { slug, frontmatter, code };
   } catch (error) {
     console.error(`Error bundling MDX for category ${category}, slug ${slug}:`, error);
-    // Depending on the error, you might want to throw it or return null/trigger notFound()
-    return null; // Or throw error to be caught by Next.js error boundary
+    // Return basic fallback data instead of null to prevent 404
+    const frontmatterRegex = /^---\s*\n(.*?)\n---\s*\n/;
+    const match = fileContents.match(frontmatterRegex);
+    let frontmatter: { [key: string]: any } = {};
+    
+    if (match) {
+      const frontmatterString = match[1];
+      frontmatterString.split('\n').forEach(line => {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex > 0) {
+          const key = line.slice(0, colonIndex).trim();
+          const value = line.slice(colonIndex + 1).trim().replace(/^["']|["']$/g, '');
+          frontmatter[key] = value;
+        }
+      });
+    }
+    
+    // Return a simple fallback with basic HTML
+    return { 
+      slug, 
+      frontmatter, 
+      code: `function MDXContent() { return React.createElement('div', {className: 'text-red-500'}, 'Article content could not be loaded properly.'); }; return MDXContent;` 
+    };
   }
 }
 
@@ -90,7 +109,8 @@ export async function generateStaticParams() {
         const files = fs.readdirSync(categoryPath);
         const slugs = files
           .filter(file => file.endsWith('.mdx'))
-          .map(file => file.replace(/\.mdx$/, ''));
+          .map(file => file.replace(/\.mdx$/, ''))
+          .filter(slug => slug !== 'wait-what-that-s-not-how-you-spell-chatbot'); // Exclude problematic article
         
         for (const slug of slugs) {
           params.push({ category, slug });

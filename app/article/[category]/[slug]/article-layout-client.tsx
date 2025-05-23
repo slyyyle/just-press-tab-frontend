@@ -84,6 +84,39 @@ export function ArticleContent({ category, slug, frontmatter, code }: ArticleCon
 
   const MDXContent = useMemo(() => getMDXComponent(code), [code]);
 
+  if (isChatbotArticle) {
+    return (
+      <main className="min-h-screen bg-background py-16 px-4 software-theme">
+        <div className="max-w-3xl mx-auto">
+          <button
+            onClick={() => router.back()}
+            className="mb-6 px-4 py-2 bg-muted text-[hsl(var(--primary))] rounded font-vt323 hover:bg-primary/10 transition"
+          >
+            ← Back
+          </button>
+          <h1 className="font-press-start-2p text-3xl mb-3 text-[hsl(var(--primary))]">
+            {displayTitle}
+          </h1>
+          <div className="flex flex-row justify-between mb-6">
+            <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
+              Author: {articleAuthor}
+            </h2>
+            <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
+              Date: {articleDate}
+            </h2>
+            <h2 className="font-vt323 text-xl text-[hsl(var(--platform))]">
+              Category: {articleCategory}
+            </h2>
+          </div>
+          
+          <div className="bg-card p-6 rounded-md border border-[hsl(var(--primary))] font-vt323 text-lg text-[hsl(var(--platform))] space-y-6 prose prose-headings:text-[hsl(var(--primary))] prose-p:text-[hsl(var(--platform))] prose-strong:text-[hsl(var(--primary))] prose-a:text-[hsl(var(--accent))] hover:prose-a:text-[hsl(var(--accent-hover))] prose-blockquote:border-[hsl(var(--primary))] prose-code:text-[hsl(var(--secondary))] prose-pre:bg-muted prose-pre:text-[hsl(var(--secondary-foreground))] prose-ul:text-[hsl(var(--platform))] prose-ol:text-[hsl(var(--platform))] prose-li:text-[hsl(var(--platform))]">
+            <MDXContent components={{ Image, YouTubeEmbed, CollapsibleHeader }} />
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background py-16 px-4 software-theme">
       <div className="max-w-3xl mx-auto">
