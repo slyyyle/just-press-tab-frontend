@@ -40,31 +40,31 @@ export function GuiDashboard() {
       title: "Music",
       icon: "🎵",
       description: "AI-powered music generation and production",
-      path: "/gui/music",
+      path: "/music",
     },
     {
       title: "Gaming",
       icon: "🎮",
       description: "Game development and retro gaming projects",
-      path: "/gui/gaming",
+      path: "/gaming",
     },
     {
       title: "Research",
       icon: "🔬",
       description: "AI/ML research and experiments",
-      path: "/gui/research",
+      path: "/research",
     },
     {
       title: "Software",
       icon: "💻",
       description: "Software development and tools",
-      path: "/gui/software",
+      path: "/software",
     },
     {
       title: "About",
       icon: "ℹ️",
       description: "About me and my projects",
-      path: "/gui/about",
+      path: "/about",
     },
   ];
 
@@ -102,7 +102,7 @@ export function GuiDashboard() {
               icon={<Hexagon className="h-6 w-6" />}
               color="blue"
               delay={0.1}
-              onClick={() => router.push("/gui/about")}
+              onClick={() => router.push("/about")}
               onHover={() => setHoverTile("about")}
               onLeave={() => setHoverTile(null)}
               isHovered={hoverTile === "about"}
@@ -116,7 +116,7 @@ export function GuiDashboard() {
               icon={<Brain className="h-6 w-6" />}
               color="purple"
               delay={0.2}
-              onClick={() => router.push("/gui/resume")}
+              onClick={() => router.push("/resume")}
               onHover={() => setHoverTile("research")}
               onLeave={() => setHoverTile(null)}
               isHovered={hoverTile === "research"}
@@ -130,7 +130,7 @@ export function GuiDashboard() {
               icon={<Code className="h-6 w-6" />}
               color="red"
               delay={0.3}
-              onClick={() => router.push("/gui/software")}
+              onClick={() => router.push("/software")}
               onHover={() => setHoverTile("software")}
               onLeave={() => setHoverTile(null)}
               isHovered={hoverTile === "software"}
@@ -144,7 +144,7 @@ export function GuiDashboard() {
               icon={<Music className="h-6 w-6" />}
               color="cyan"
               delay={0.2}
-              onClick={() => router.push("/gui/music")}
+              onClick={() => router.push("/music")}
               onHover={() => setHoverTile("music")}
               onLeave={() => setHoverTile(null)}
               isHovered={hoverTile === "music"}
@@ -158,7 +158,7 @@ export function GuiDashboard() {
               icon={<Gamepad2 className="h-6 w-6" />}
               color="green"
               delay={0.5}
-              onClick={() => router.push("/gui/gaming")}
+              onClick={() => router.push("/gaming")}
               onHover={() => setHoverTile("gaming")}
               onLeave={() => setHoverTile(null)}
               isHovered={hoverTile === "gaming"}
@@ -172,10 +172,10 @@ export function GuiDashboard() {
               icon={<FileText className="h-6 w-6" />}
               color="yellow"
               delay={0.6}
-              onClick={() => router.push("/gui/feed")}
-              onHover={() => setHoverTile("feed")}
+              onClick={() => router.push("/life")}
+              onHover={() => setHoverTile("life")}
               onLeave={() => setHoverTile(null)}
-              isHovered={hoverTile === "feed"}
+              isHovered={hoverTile === "life"}
               description="A catch all for everything else"
               imagePlaceholder="/ness_hanging.gif"
               imageAlt="Blog writing"

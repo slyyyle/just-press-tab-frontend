@@ -120,29 +120,24 @@ export function GuiNavMenu({ onTerminalMode }: { onTerminalMode: () => void }) {
 
   const menuItems = [
     {
-      title: "Music",
-      icon: "🎵",
-      path: "/gui/music",
+      name: "Music",
+      path: "/music",
     },
     {
-      title: "Gaming",
-      icon: "🎮",
-      path: "/gui/gaming",
+      name: "Gaming",
+      path: "/gaming",
     },
     {
-      title: "Research",
-      icon: "🔬",
-      path: "/gui/research",
+      name: "Research",
+      path: "/research",
     },
     {
-      title: "Software",
-      icon: "💻",
-      path: "/gui/software",
+      name: "Software",
+      path: "/software",
     },
     {
-      title: "About",
-      icon: "ℹ️",
-      path: "/gui/about",
+      name: "About",
+      path: "/about",
     },
   ];
 

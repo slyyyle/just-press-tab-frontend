@@ -25,19 +25,6 @@ export default function AboutPage() {
       <div className="fixed inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
       <div className="fixed inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-black opacity-80 pointer-events-none"></div>
 
-      {/* Back button */}
-      <div className="absolute top-4 left-4 z-10">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => router.push("/")}
-          className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-full px-3 py-1.5 text-sm font-mono text-slate-300 hover:text-white hover:bg-slate-700/50"
-        >
-          <ArrowLeft size={14} className="mr-1" />
-          Back to Dashboard
-        </Button>
-      </div>
-
       {/* Page content */}
       <div className="relative z-10 w-full max-w-3xl mx-auto mt-16">
         <motion.div
@@ -58,7 +45,9 @@ export default function AboutPage() {
           className="prose prose-invert max-w-none"
         >
           <div className="bg-slate-900/60 backdrop-blur-sm rounded-lg p-6 border border-slate-700/50 shadow-lg">
-            <h2 className="text-2xl font-mono text-cyan-400 mb-6">The Problem (huh?)</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-mono text-cyan-400">The Problem (huh?)</h2>
+            </div>
 
             <p className="text-slate-300 leading-relaxed mb-4">
               My name is Kyle Hammitt, and I am an AI Software Engineer. 
@@ -82,25 +71,27 @@ export default function AboutPage() {
             </div>
 
             <p className="text-slate-300 leading-relaxed mb-4">
-              I didn't meticulously handcraft this website—instead, I guided an algorithm through hundreds of prompts to
-              teach me, refactor code, explain types, and demonstrate best practices. Technically I wrote it in the sense 
-              people want to point to for merit.  It was a great teacher - I knew there would be bumps.
-              
-              These AI tools may be uninterpretable under the hood, but that's their strength.  We still have to coach in some capacity.
+              All I did was "creatively write" to a chatbot, in the form of hundreds of prompts to
+              teach me, refactor code, explain types, and demonstrate best practices.
             </p>
 
-            <p className="text-slate-300 leading-relaxed mb-4">
-              By relaxing our need for specific things to work - we make our models harder to understand, but more
-              capable of doing difficult things.  For now, that is the trade off - we are replacing explanatory power for utility.{" "}
-              <br />
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 to-pink-400 text-transparent bg-clip-text font-medium text-center block">
-                It's an important distinction. Semantics are everything after all!
-              </span>{" "}
+            <p className="text-slate-300 leading-relaxed mt-4 mb-4 text-center font-mono text-lg bg-gradient-to-r from-cyan-400 to-pink-400 text-transparent bg-clip-text">
+              These AI tools may be inexplicable, but that's their strength.  
+              <a href="/contact" className="hover:underline"></a>
             </p>
 
-            <p className="text-slate-300 leading-relaxed mt-8 text-center font-mono text-lg bg-gradient-to-r from-cyan-400 to-pink-400 text-transparent bg-clip-text">
-              Have fun!
+            <p className="text-slate-300 leading-relaxed">
+              By relaxing our need for specific things to be true - we make our models harder to understand, but more
+              capable of doing difficult things.  
+            </p>
+            <br />  
+
+            <p className="text-slate-300 leading-relaxed"> 
+              For now, that is the trade off - we are replacing explanatory power for utility.  It's an important distinction.{" "}
+            </p>
+
+            <p className="text-slate-300 leading-relaxed mt-4 text-center font-mono text-lg bg-gradient-to-r from-cyan-400 to-pink-400 text-transparent bg-clip-text">
+              Semantics ARE everything, after all!
               <a href="/contact" className="hover:underline"></a>
             </p>
           </div>

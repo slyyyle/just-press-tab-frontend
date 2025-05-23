@@ -2,9 +2,9 @@
 import { Button } from "@/components/ui/button"
 import { PageHeader } from "@/components/page-header"
 
-export default function FeedPage() {
-  // Hardcoded feed posts
-  const feedPosts = [
+export default function LifePage() {
+  // Hardcoded life posts
+  const lifePosts = [
     {
       id: 1,
       title: "The Day I Pressed Tab",
@@ -39,14 +39,14 @@ export default function FeedPage() {
     <main className="min-h-screen bg-background py-16 px-4 feed-theme">
       <div className="max-w-6xl mx-auto">
         <PageHeader 
-          title="RSS/Feed" 
-          subtitle="Thoughts, tutorials, and explorations" 
+          title="Life" 
+          subtitle="A catch all for everything else" 
           glowColor="text-[hsl(var(--primary))]"
         />
 
-        {/* Feed posts grid */}
+        {/* Life posts grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {feedPosts.map((post) => (
+          {lifePosts.map((post) => (
             <div
               key={post.id}
               className="bg-card border-2 border-[hsl(var(--platform))] rounded-md overflow-hidden pixel-corners transition-transform hover:scale-105"

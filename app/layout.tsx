@@ -3,8 +3,6 @@ import type { Metadata } from "next"
 import { Inter, VT323, Press_Start_2P } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ClientLayout } from "@/components/client-layout"
-import { BgFxHandler } from "@/components/bg_fx_handler"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" })
 const vt323 = VT323({
@@ -21,11 +19,11 @@ const pressStart2P = Press_Start_2P({
 })
 
 const navigation = [
-  { name: "Music", href: "/gui/music" },
-  { name: "Gaming", href: "/gui/gaming" },
-  { name: "Research", href: "/gui/research" },
-  { name: "Software", href: "/gui/software" },
-  { name: "About", href: "/gui/about" },
+  { name: "Music", href: "/music" },
+  { name: "Gaming", href: "/gaming" },
+  { name: "Research", href: "/research" },
+  { name: "Software", href: "/software" },
+  { name: "About", href: "/about" },
 ];
 
 export const metadata: Metadata = {
@@ -44,11 +42,7 @@ export default function RootLayout({
         className={`${inter.variable} ${vt323.variable} ${pressStart2P.variable} font-sans bg-black text-green-400`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <BgFxHandler>
-            <ClientLayout>
-              {children}
-            </ClientLayout>
-          </BgFxHandler>
+          {children}
         </ThemeProvider>
       </body>
     </html>

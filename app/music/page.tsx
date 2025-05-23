@@ -478,7 +478,7 @@ export default function MusicPage() {
             variant="default" 
             size="lg" 
             className="font-press-start-2p text-sm transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[hsl(var(--gradient-from))] to-[hsl(var(--gradient-to))] hover:from-[hsl(var(--gradient-hover-from))] hover:to-[hsl(var(--gradient-hover-to))]"
-            onClick={() => router.push("/gui/music/disclaimer")}
+            onClick={() => router.push("/music/disclaimer")}
           >
             View All Music Projects
           </Button>

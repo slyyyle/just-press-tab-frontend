@@ -13,12 +13,13 @@ const YouTubeEmbed = dynamic(() => import('@/components/YouTubeEmbed'), {
 });
 
 interface ArticleContentProps {
+  category: string;
   slug: string;
   frontmatter: { [key: string]: any };
   code: string;
 }
 
-export function ArticleContent({ slug, frontmatter, code }: ArticleContentProps) {
+export function ArticleContent({ category, slug, frontmatter, code }: ArticleContentProps) {
   const router = useRouter();
   const articleSlug = slug;
 
